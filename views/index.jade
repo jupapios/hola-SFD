@@ -16,13 +16,17 @@ block content
 
 	section#sec-login.form
 		form(ng-controller="FormController", name="loginForm", action="?")
+
 			h3 Inicia sesión
+
 			p.error(ng-show="valide && !loginForm.user.$valid") Campo requerido
 				span
 			input(name="user", type="text", placeholder="usuario", ng-model="userType", required)
+
 			p.error(ng-show="valide && !loginForm.password.$valid") Campo requerido
 				span
 			input(name="password", type="password", placeholder="contraseña", ng-model="userType", required)
+			
 			input(type="submit", value="ingresar", class="button-orange", ng-click="submit()")
 		p
 			a(href="#", class="button-twitter") twitter
