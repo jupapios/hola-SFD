@@ -1,9 +1,18 @@
 doctype 5
-html(lang="es")
+html(lang="es", data-ng-app)
 	head
 		title= title
-		link(rel="stylesheet", href="css/main.css")
-	body
-		block content
+		meta(charset="utf-8")
 
-		script(src="js/main.js")
+		link(rel="stylesheet", href="css/main.css")
+		link(rel="stylesheet", href="http://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,600")
+
+	body
+		header
+			block header
+		div(role="main")
+			block content
+		footer
+			block footer
+
+		script(src="js/core.js")

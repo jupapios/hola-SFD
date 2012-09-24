@@ -1,4 +1,46 @@
 extends layout
 
 block content
-	video(autoplay)
+	script
+		function FormController($scope) {
+			$scope.valide = false;
+
+			$scope.submit = function(e) {
+				this.valide = true;
+				return false;
+			}
+
+			$scope.userType = '';
+
+		}
+
+	section#sec-login.form
+		form(ng-controller="FormController", name="loginForm", action="?")
+			h3 Inicia sesión
+			p.error(ng-show="valide && !loginForm.user.$valid") Campo requerido
+				span
+			input(name="user", type="text", placeholder="usuario", ng-model="userType", required)
+			p.error(ng-show="valide && !loginForm.password.$valid") Campo requerido
+				span
+			input(name="password", type="password", placeholder="contraseña", ng-model="userType", required)
+			input(type="submit", value="ingresar", class="button-orange", ng-click="submit()")
+		p
+			a(href="#", class="button-twitter") twitter
+			a(href="#", class="button-facebook") facebook
+
+	section#sec-register.form
+		form
+			h3 Crea una cuenta
+			p.error.hide Campo requerido
+				span
+			input(type="text", placeholder="usuario", required)
+			p.error.hide Campo requerido
+				span
+			input(type="email", placeholder="correo", required)
+			p.error.hide Campo requerido
+				span
+			input(type="password", placeholder="contraseña", required)
+			input(type="submit", value="registrar", class="button-orange")
+		p
+			a(href="#", class="button-twitter") twitter
+			a(href="#", class="button-facebook") facebook
