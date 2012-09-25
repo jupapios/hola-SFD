@@ -11,6 +11,15 @@ var express = require('express')
 
 var app = express();
 
+
+app.locals({
+  url: {
+    home: '/',
+    login: '/login',
+    register: '/register'
+  }
+});
+
 app.configure(function(){
   app.set('port', process.env.PORT || 3000);
   app.set('views', __dirname + '/views');
@@ -27,9 +36,19 @@ app.configure('development', function(){
   app.use(express.errorHandler());
 });
 
-app.get('/', routes.index);
-app.get('/chat', routes.chat);
-app.get('/users', user.list);
+app.get(app.locals.url.home, routes.index);
+
+app.post(app.locals.url.login, user.doLogin);
+app.post(app.locals.url.register, user.doRegister);
+
+app.get(app.locals.url.login, routes.login);
+app.get(app.locals.url.register, routes.register);
+
+
+//app.get('/login', user.doLogin);
+
+// app.get('/chat', routes.chat);
+// app.get('/users', user.list);
 
 http.createServer(app).listen(app.get('port'), function(){
   console.log("Express server listening on port " + app.get('port'));

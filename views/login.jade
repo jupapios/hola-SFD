@@ -1,0 +1,35 @@
+extends base/layout
+
+block content
+	script
+		function FormController($scope) {
+			$scope.valide = false;
+
+			$scope.submit = function(e) {
+				this.valide = true;
+				return false;
+			}
+
+			$scope.userType = '';
+			$scope.emailType = '';
+			$scope.passType = '';
+		}
+
+	section#sec-login.form
+		form(ng-controller="FormController", name="signinForm", action=url.login, method="POST")
+
+			h3 Inicia sesión
+
+			p.error(ng-show="valide &amp;&amp; signinForm.username.$error.required") Tu usuario es requerido
+				span
+			input(name="username", type="text", placeholder="usuario", ng-model="userType", required)
+
+			p.error(ng-show="valide &amp;&amp; signinForm.password.$error.required") Tu contraseña es requerida
+				span
+			input(name="password", type="password", placeholder="contraseña", ng-model="passType", required)
+			
+			a(href=url.register) registrarse
+			input(type="submit", value="ingresar", class="button-orange", ng-click="submit()")
+		p
+			a(href="#", class="button-twitter") twitter
+			a(href="#", class="button-facebook") facebook

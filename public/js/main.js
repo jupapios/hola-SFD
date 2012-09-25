@@ -1,3 +1,20 @@
+// AngularJS
+function FormController($scope) {
+	$scope.valide = false;
+
+	$scope.submit = function(e) {
+		this.valide = true;
+		return false;
+	}
+
+	$scope.userType = '';
+	$scope.emailType = '';
+	$scope.passType = '';
+}
+
+
+
+// UserMedia
 window.URL = window.URL || window.webkitURL;
 navigator.getUserMedia  = navigator.getUserMedia || navigator.webkitGetUserMedia || navigator.mozGetUserMedia || navigator.msGetUserMedia;
 
@@ -11,8 +28,11 @@ function success(stream) {
 	video.src = window.URL.createObjectURL(stream);
 }
 
-if (!navigator.getUserMedia) {
-	fallback();
-} else {
-	navigator.getUserMedia({video: true, audio: true}, success, fallback);
+
+function initMedia() {
+	if (!navigator.getUserMedia) {
+		fallback();
+	} else {
+		navigator.getUserMedia({video: true, audio: true}, success, fallback);
+	}
 }

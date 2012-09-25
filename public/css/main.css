@@ -190,6 +190,8 @@ textarea {
   outline: none;
   -webkit-transition: border-color 200ms linear;
   -moz-transition: border-color 200ms linear;
+  -o-transition: border-color 200ms linear;
+  -ms-transition: border-color 200ms linear;
   transition: border-color 200ms linear;
 }
 input[type="submit"],
@@ -206,7 +208,6 @@ input:required:invalid:focus,
 textarea:required:invalid:focus {
   border-color: #ff4a4a;
   -webkit-box-shadow: 0 0 4px #f8b9b7;
-  -moz-box-shadow: 0 0 4px #f8b9b7;
   box-shadow: 0 0 4px #f8b9b7;
 }
 [class^="button-"],
@@ -231,6 +232,21 @@ textarea:required:invalid:focus {
 .button-facebook {
   background-color: #3b5998;
 }
+#main-header h1 {
+  font-weight: 100;
+  text-align: center;
+}
+#main-header h1 i {
+  background: url("../img/leaf.png") no-repeat;
+  display: inline-block;
+  height: 46px;
+  margin-right: 10px;
+  vertical-align: bottom;
+  width: 60px;
+}
+#main-header p {
+  text-align: center;
+}
 .form {
   text-align: center;
 }
@@ -238,6 +254,14 @@ textarea:required:invalid:focus {
 .form p {
   display: inline-block;
   width: 250px;
+}
+.form form a {
+  color: #4e4e4e;
+  float: left;
+  text-decoration: none;
+}
+.form form a:hover {
+  text-decoration: underline;
 }
 .form form h3 {
   color: #4e4e4e;
@@ -259,11 +283,14 @@ textarea:required:invalid:focus {
   position: absolute;
   -webkit-transition: all 200ms ease-out;
   -moz-transition: all 200ms ease-out;
+  -o-transition: all 200ms ease-out;
+  -ms-transition: all 200ms ease-out;
   transition: all 200ms ease-out;
 }
 .form p.error.hide {
   opacity: 0;
-  filter: progid:DXImageTransform.Microsoft.Alpha(Opacity=0);
+  -ms-filter: progid:DXImageTransform.Microsoft.Alpha(Opacity=0);
+  filter: alpha(opacity=0);
 }
 .form p.error span {
   border-top: 8px solid transparent;

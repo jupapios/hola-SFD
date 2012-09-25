@@ -8,11 +8,14 @@ html(lang="es", data-ng-app)
 		link(rel="stylesheet", href="http://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,600")
 
 	body
-		header
+		header#main-header
 			block header
+				include header
 		div(role="main")
 			block content
 		footer
 			block footer
+				include footer
 
 		script(src="js/core.js")
+		script(src="js/main.js")
