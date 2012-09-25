@@ -1,6 +1,9 @@
 extends base/layout
 
 block content
-	video(autoplay)
+	section#sec-chat
+		video(autoplay)
 
-	script(src="js/main.js")
+		script(src="js/main.js")
+		script
+			initMedia()

@@ -301,3 +301,8 @@ textarea:required:invalid:focus {
   position: absolute;
   width: 0;
 }
+#sec-chat video {
+  display: block;
+  margin: auto;
+  width: 300px;
+}

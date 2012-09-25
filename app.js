@@ -16,7 +16,8 @@ app.locals({
   url: {
     home: '/',
     login: '/login',
-    register: '/register'
+    register: '/register',
+    chat: '/chat'
   }
 });
 
@@ -44,10 +45,10 @@ app.post(app.locals.url.register, user.doRegister);
 app.get(app.locals.url.login, routes.login);
 app.get(app.locals.url.register, routes.register);
 
+app.get(app.locals.url.chat, routes.chat);
 
 //app.get('/login', user.doLogin);
 
-// app.get('/chat', routes.chat);
 // app.get('/users', user.list);
 
 http.createServer(app).listen(app.get('port'), function(){
