@@ -1,20 +1,6 @@
 extends base/layout
 
 block content
-	script
-		function FormController($scope) {
-			$scope.valide = false;
-
-			$scope.submit = function(e) {
-				this.valide = true;
-				return false;
-			}
-
-			$scope.userType = '';
-			$scope.emailType = '';
-			$scope.passType = '';
-		}
-
 	section#sec-login.form
 		form(ng-controller="FormController", name="signinForm", action=url.login, method="POST")
 
