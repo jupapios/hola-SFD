@@ -14,8 +14,8 @@ block content
 				span
 			input(name="password", type="password", placeholder="contraseña", ng-model="passType", required)
 			
-			a(href=url.register) registrarse
-			input(type="submit", value="ingresar", class="button-orange", ng-click="submit()")
+			a.link-gray(href=url.register) registrarse
+			input.button-orange(type="submit", value="ingresar", ng-click="submit()")
 		p
-			a(href="#", class="button-twitter") twitter
-			a(href="#", class="button-facebook") facebook
+			a.button-twitter(href="#") twitter
+			a.button-facebook(href="#") facebook

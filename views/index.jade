@@ -1,5 +1,18 @@
 extends base/layout
 
+block header
+
 block content
 	section#sec-home
-		p hola
+		div.side
+			input(type="text", placeholder="nombre amigo")
+			ul
+				each friend, i in onlineFriends
+					li #{friend}
+			a.link-gray Añadir amigo
+		div.conversation
+			video(autoplay)
+
+block js
+	script
+		initMedia()

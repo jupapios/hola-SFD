@@ -1,47 +1,28 @@
-.form
-	text-align center
-
-	form, p
+#sec-home
+	.conversation, .side
 		display inline-block
-		width 250px
+		vertical-align top
 
-	form
-		a
-			color color-black
-			float left
-			text-decoration none
 
+	.side
+		box-sizing border-box
+		padding 10px
+
+		//min-width 260px
+		max-width 500px
+		width 20%
+
+		li
+			cursor pointer
 			&:hover
 				text-decoration underline
 
-		h3
-			color color-black
-			text-align left
+	.conversation
+		padding-top 20px
+		width 80%
 
-	p
-		text-align center
-
-		a
-			margin 0 10px
-
-	p.error
-		background-color color-red
-		color white
-		font-weight 400
-		margin 0
-		margin-left -265px
-		padding 7px 0
-		position absolute
-		transition all 200ms ease-out
-
-		&.hide
-			opacity 0
-
-		span
-			border-top 8px solid transparent
-			border-bottom 8px solid transparent
-			border-left 8px solid color-red
-			height 0
-			right -8px
-			position absolute
-			width 0 
+		video
+			display block
+			margin auto
+			width 98%
+			max-width 500px

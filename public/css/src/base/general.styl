@@ -14,7 +14,7 @@ input, textarea
 
 	&:not([type="submit"])
 		border 1px solid color-blue
-		min-width 100%
+		width 100%
 		padding 6px 4px
 
 	&:required:invalid:focus
@@ -42,3 +42,52 @@ input, textarea
 
 .button-facebook
 	background-color color-facebook	
+
+.link-gray
+	color color-black
+	float left
+	text-decoration none
+
+	&:hover
+		text-decoration underline
+
+
+.form
+	text-align center
+
+	form, p
+		display inline-block
+		width 250px
+
+	form
+		h3
+			color color-black
+			text-align left
+
+	p
+		text-align center
+
+		a
+			margin 0 10px
+
+	p.error
+		background-color color-red
+		color white
+		font-weight 400
+		margin 0
+		margin-left -265px
+		padding 7px 0
+		position absolute
+		transition all 200ms ease-out
+
+		&.hide
+			opacity 0
+
+		span
+			border-top 8px solid transparent
+			border-bottom 8px solid transparent
+			border-left 8px solid color-red
+			height 0
+			right -8px
+			position absolute
+			width 0 	

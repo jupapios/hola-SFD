@@ -5,7 +5,7 @@
 
 exports.index = function(req, res){
 	// if login
-		res.render('index', { title: 'getUserMedia' });
+		res.render('index', { title: 'getUserMedia', onlineFriends: ["amigo 1", "amigo 2", "amigo 3"]});
 	// else
   		//res.redirect('/login');
 };
