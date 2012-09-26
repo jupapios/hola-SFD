@@ -47,7 +47,8 @@ function waitForRemoteVideo() {
 
 // PC FUNCTINS
 function initPeer() {
-	pc = new webkitPeerConnection00("STUN stun.l.google.com:19302", onIceCandidate);
+	//pc = new webkitPeerConnection00("STUN stun.l.google.com:19302", onIceCandidate);
+	pc = new webkitPeerConnection00("NONE", onIceCandidate);
 
 	pc.onconnecting = onSessionConnecting;
 	pc.onopen = onSessionOpened;
