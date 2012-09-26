@@ -4,8 +4,12 @@
  */
 
 exports.index = function(req, res){
+	var id=null;
+	if(req.query.id) {
+		id = req.query.id;
+	}
 	// if login
-		res.render('index', { title: 'getUserMedia', onlineFriends: ["amigo 1", "amigo 2", "amigo 3"]});
+		res.render('index', { title: 'getUserMedia', onlineFriends: ["amigo 1", "amigo 2", "amigo 3"], id:id});
 	// else
   		//res.redirect('/login');
 };

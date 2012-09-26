@@ -190,6 +190,8 @@ textarea {
   outline: none;
   -webkit-transition: border-color 200ms linear;
   -moz-transition: border-color 200ms linear;
+  -o-transition: border-color 200ms linear;
+  -ms-transition: border-color 200ms linear;
   transition: border-color 200ms linear;
 }
 input[type="submit"],
@@ -206,7 +208,6 @@ input:required:invalid:focus,
 textarea:required:invalid:focus {
   border-color: #ff4a4a;
   -webkit-box-shadow: 0 0 4px #f8b9b7;
-  -moz-box-shadow: 0 0 4px #f8b9b7;
   box-shadow: 0 0 4px #f8b9b7;
 }
 [class^="button-"],
@@ -267,11 +268,14 @@ textarea:required:invalid:focus {
   position: absolute;
   -webkit-transition: all 200ms ease-out;
   -moz-transition: all 200ms ease-out;
+  -o-transition: all 200ms ease-out;
+  -ms-transition: all 200ms ease-out;
   transition: all 200ms ease-out;
 }
 .form p.error.hide {
   opacity: 0;
-  filter: progid:DXImageTransform.Microsoft.Alpha(Opacity=0);
+  -ms-filter: progid:DXImageTransform.Microsoft.Alpha(Opacity=0);
+  filter: alpha(opacity=0);
 }
 .form p.error span {
   border-top: 8px solid transparent;
@@ -321,8 +325,14 @@ textarea:required:invalid:focus {
   width: 80%;
 }
 #sec-home .conversation video {
+  border: 1px solid #3abbd5;
   display: block;
+}
+#sec-home .conversation #video-remote {
   margin: auto;
   width: 98%;
   max-width: 500px;
+}
+#sec-home .conversation #video-local {
+  width: 100px;
 }

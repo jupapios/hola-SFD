@@ -3,7 +3,9 @@ extends base/layout
 block header
 
 block content
+	img
 	section#sec-home
+		span#peerId(data-id=id, hidden)
 		div.side
 			input(type="text", placeholder="nombre amigo")
 			ul
@@ -11,8 +13,9 @@ block content
 					li #{friend}
 			a.link-gray Añadir amigo
 		div.conversation
-			video(autoplay)
+			video#video-local(autoplay)
+			video#video-remote(autoplay)
 
 block js
 	script
-		initMedia()
+		init()
