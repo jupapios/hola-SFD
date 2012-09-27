@@ -8,13 +8,13 @@ exports.index = function(req, res){
 	if(req.query.id) {
 		id = req.query.id;
 	}
-	res.render('index', { title: 'getUserMedia', id: req.session.auth.twitter.user.screen_name});
+	res.render('index', { title: 'hola', id: req.session.auth.twitter.user.screen_name });
 };
 
 exports.login = function(req, res){
-  res.render('login', { title: 'getUserMedia' });
+  res.render('login', { title: 'hola' });
 };
 
 exports.register = function(req, res){
-  res.render('register', { title: 'getUserMedia' });
+  res.render('register', { title: 'hola' });
 };

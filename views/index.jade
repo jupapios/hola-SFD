@@ -21,10 +21,14 @@ block content
 
 				input.button-orange(type="submit", value="invitar", ng-click="submit()")
 
+
 			video#video-local(autoplay)
 
 		div.conversation
-			video#video-remote(autoplay)
+			div#video-container
+				div.face.front
+					img(src="img/person.png")
+				video#video-remote.face.back(autoplay)
 
 block js
 	script

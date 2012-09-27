@@ -31,9 +31,17 @@
 		&.hidden
 			display none
 
-	#video-remote
+	#video-container
 		width 98%
+		height 360px
 		max-width 500px
+
+		.front
+			text-align center
+
+			img
+				height 90%
+				margin-top 20px
 
 	#video-local
 		width 100%
@@ -63,4 +71,41 @@
 		padding-top 20px
 		width 80%
 
+
+	// Flip
+	#video-container
+		perspective 600px
+		position relative
+		margin auto
+
+		&.active
+			.front
+				z-index 900
+				transform rotateY(-180deg)
+				opacity 0
+
+			.back
+				background-color white
+				transform rotateX(0deg) rotateY(0deg)
+				opacity 1
+				z-index 1000
+		.face
+			border 1px solid color-blue
+			position absolute
+			top 0
+			left 0
+			transform-style preserve-3d
+			backface-visibility hidden
+			transition .4s ease-in-out, opacity .4s ease-in-out
+			height inherit
+			width inherit
+
+		.back
+			transform rotateY(180deg)
+			opacity 0
+			z-index 800
+
+		.front
+			background none
+			z-index 900
 

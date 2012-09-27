@@ -60,7 +60,7 @@ function sendMessage(event, message) {
 
 function waitForRemoteVideo() {
 	if (remoteVideo.currentTime > 0) {
-		//ok
+		document.getElementById('video-container').className += ' active';
 	} else {
 		setTimeout(waitForRemoteVideo, 100);
 	}
