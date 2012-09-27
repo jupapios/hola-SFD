@@ -70,8 +70,8 @@ function waitForRemoteVideo() {
 
 // PC FUNCTINS
 function initPeer() {
-	pc = new webkitPeerConnection00("STUN stun.l.google.com:19302", onIceCandidate);
-	//pc = new webkitPeerConnection00("NONE", onIceCandidate);
+	//pc = new webkitPeerConnection00("STUN stun.l.google.com:19302", onIceCandidate);
+	pc = new webkitPeerConnection00("NONE", onIceCandidate);
 
 	pc.onconnecting = onSessionConnecting;
 	pc.onopen = onSessionOpened;
@@ -158,8 +158,8 @@ function onUserMediaError(message) {
 }
 
 function init() {
-	//socket = new WebSocket('ws://hola.jit.su/');
 	socket = new WebSocket('ws://hola.jit.su/');
+	//socket = new WebSocket('ws://192.168.1.130:3000/');
 
 	socket.onopen = function () {
 		socketReady = true;
