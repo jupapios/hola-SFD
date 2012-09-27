@@ -8,10 +8,7 @@ exports.index = function(req, res){
 	if(req.query.id) {
 		id = req.query.id;
 	}
-	// if login
-		res.render('index', { title: 'getUserMedia', onlineFriends: ["amigo 1", "amigo 2", "amigo 3"], id:id});
-	// else
-  		//res.redirect('/login');
+	res.render('index', { title: 'getUserMedia', id: req.session.auth.twitter.user.screen_name});
 };
 
 exports.login = function(req, res){

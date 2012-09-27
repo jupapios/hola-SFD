@@ -59,16 +59,16 @@ input, textarea
 		display inline-block
 		width 250px
 
-	form
-		h3
-			color color-black
-			text-align left
+	a
+		margin 0 10px
+
+form
+	h3
+		color color-black
+		text-align left
 
 	p
 		text-align center
-
-		a
-			margin 0 10px
 
 	p.error
 		background-color color-red
@@ -86,8 +86,15 @@ input, textarea
 		span
 			border-top 8px solid transparent
 			border-bottom 8px solid transparent
-			border-left 8px solid color-red
 			height 0
-			right -8px
 			position absolute
-			width 0 	
+			width 0
+			
+
+			&.right
+				border-left 8px solid color-red
+				right -8px
+
+			&.left
+				border-right 8px solid color-red
+				left -8px

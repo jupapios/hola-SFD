@@ -7,15 +7,15 @@ block content
 			h3 Inicia sesión
 
 			p.error(ng-show="valide &amp;&amp; signinForm.username.$error.required") Tu usuario es requerido
-				span
+				span.right
 			input(name="username", type="text", placeholder="usuario", ng-model="userType", required)
 
 			p.error(ng-show="valide &amp;&amp; signinForm.password.$error.required") Tu contraseña es requerida
-				span
+				span.right
 			input(name="password", type="password", placeholder="contraseña", ng-model="passType", required)
 			
 			a.link-gray(href=url.register) registrarse
 			input.button-orange(type="submit", value="ingresar", ng-click="submit()")
 		p
-			a.button-twitter(href="#") twitter
-			a.button-facebook(href="#") facebook
+			a.button-twitter(href="/auth/twitter") twitter
+			a.button-facebook(href="/auth/facebook") facebook

@@ -7,17 +7,17 @@ block content
 			h3 Crea una cuenta
 
 			p.error(ng-show="valide &amp;&amp; signupForm.username.$error.required") Tu usuario es requerido
-				span
+				span.right
 			input(type="text", name="username" ,placeholder="usuario", ng-model="userType", required)
 
 			p.error(ng-show="valide &amp;&amp; signupForm.email.$error.required") Tu correo es requerido
-				span
+				span.right
 			p.error(ng-show="valide &amp;&amp; signupForm.email.$error.email") Tu correo es inválido
-				span				
+				span.right	
 			input(type="email", name="email", placeholder="correo", ng-model="emailType", required)
 
 			p.error(ng-show="valide &amp;&amp; signupForm.password.$error.required") Tu contraseña es requerida
-				span
+				span.right
 			input(type="password", name="password" ,placeholder="contraseña", ng-model="passType", required)
 
 			a(href=url.login) iniciar sesión

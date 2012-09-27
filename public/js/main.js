@@ -4,7 +4,10 @@ function FormController($scope) {
 
 	$scope.submit = function(e) {
 		this.valide = true;
-		return false;
+
+		if($scope.invitationForm.$valid) {
+			// do work!
+		}
 	}
 
 	$scope.userType = '';
@@ -12,8 +15,29 @@ function FormController($scope) {
 	$scope.passType = '';
 }
 
+function InvitationController($scope) {
+	$scope.valide = false;
+
+	$scope.submit = function(e) {
+		if(socketReady) {
+			this.valide = true;
+
+			if($scope.invitationForm.$valid) {
+				//socket
+				otherId = $scope.userType;
+				sendMessage({type: 'invitation', user: otherId, id: myId});
+			}
+		} else {
+			// show waiting
+		}
+	}
+
+	$scope.userType = '';
+}
+
 
 var socket;
+var socketReady = false;
 
 var localVideo;
 var remoteVideo;
@@ -32,13 +56,12 @@ var myId;
 
 function sendMessage(message) {
 	var msgString = JSON.stringify(message);
-	console.log('C->S: ' + msgString);
 	socket.send(msgString);
 }
 
 function waitForRemoteVideo() {
 	if (remoteVideo.currentTime > 0) {
-		console.log('LISTO!');
+		//ok
 	} else {
 		setTimeout(waitForRemoteVideo, 100);
 	}
@@ -65,7 +88,7 @@ function initPeer() {
 
 function onIceCandidate(candidate, moreToFollow) {
 	if (candidate) {
-		sendMessage({type: 'candidate', label: candidate.label, candidate: candidate.toSdp(),  peer: otherId});
+		sendMessage({type: 'candidate', label: candidate.label, candidate: candidate.toSdp(),  id: otherId});
 	}	
 	if (!moreToFollow) {
 		console.log("End of candidates.");
@@ -99,7 +122,7 @@ function doCall() {
 	var offer = pc.createOffer({audio:true, video:true});
 	pc.setLocalDescription(pc.SDP_OFFER, offer);
 	console.log("Send offer to peer",'type: offer', 'sdp:', offer.toSdp(), 'peer:', otherId, 'caller' ,myId);
-	sendMessage({type: 'offer', sdp: offer.toSdp(), peer: otherId, caller: myId});
+	sendMessage({type: 'offer', sdp: offer.toSdp(), id: otherId, caller: myId});
 	pc.startIce();
 }
 
@@ -108,7 +131,7 @@ function doAnswer() {
 	var offer = pc.remoteDescription;
 	var answer = pc.createAnswer(offer.toSdp(), {audio:true,video:true});
 	pc.setLocalDescription(pc.SDP_ANSWER, answer);
-	sendMessage({type: 'answer', sdp: answer.toSdp(), peer: otherId});
+	sendMessage({type: 'answer', sdp: answer.toSdp(), id: otherId});
 	pc.startIce();
 }
 
@@ -135,17 +158,31 @@ function onUserMediaError(message) {
 }
 
 function init() {
-	socket = new WebSocket('ws://192.168.1.24:3000/');
+	socket = new WebSocket('ws://holasfd.herokuapp.com/');
 
 	socket.onopen = function () {
+		socketReady = true;
+
 		localVideo = document.getElementById('video-local');
 		remoteVideo = document.getElementById('video-remote');
 		getUserMedia();
 
-		otherId = document.getElementById('peerId').dataset.id;
-		if(otherId) {
-			initiator = 1;
+		myId = document.getElementById('peerId').dataset.id;
+		
+		if(myId) {
+			sendMessage({type: 'join', id: myId});
 		}
+
+		// link cuando se es invitado
+		var invitationElement = document.getElementById('invitation');
+
+		invitationElement.querySelector('a').addEventListener('click', function() {
+			invitationElement.className = 'hidden';
+			sendMessage({type: 'accept', id: otherId});
+			initiator = 1;
+			initPeer();
+		});
+
 	}
 
 	socket.onmessage = function (message) {
@@ -155,6 +192,15 @@ function init() {
 		if(type == 'id') {
 			myId = data.id;
 			console.log(data.id);
+		} else if(type == 'invitation') {
+			var invitationElement = document.getElementById('invitation');
+			invitationElement.querySelector('#user').innerText = data.id;
+			invitationElement.className = '';
+
+			otherId = data.id;
+
+		} else if(type == 'accept') {
+			initPeer();
 		} else if(type == 'offer') {
 			otherId = data.caller;
 			console.log('Socker Rec: offer '+otherId);
