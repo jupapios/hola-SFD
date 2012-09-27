@@ -17,8 +17,8 @@ everyauth.twitter
 	.consumerSecret('nd3Nf4JjLIS5g8DUpIogiVRT5iIUwnEsrkFMIWVBj0')
 	.findOrCreateUser(function(session, accessToken, accessTokenSecret, twitterUserData) {
 		var promise = this.Promise();
-    	users.findOrCreateByTwitterData(twitterUserData, promise);
-    	return promise;
+		users.findOrCreateByTwitterData(twitterUserData, promise);
+		return promise;
 	})
 	.redirectPath('/');
 
@@ -72,45 +72,37 @@ app.get(app.locals.url.register, routes.register);
 
 var server = http.createServer(app);
 
-
-var WebSocketServer = require('websocket').server;
-
-
-// create the server
-ws = new WebSocketServer({
-	httpServer: server
-});
-
+var io = require('socket.io').listen(server);
 
 var instances = {};
 
-ws.on('request', function(request) {
-	
-		var socket = request.accept(null, request.origin);
+io.sockets.on('connection', function (socket) {
 
-		socket.on('message', function(message) {
-			var data = JSON.parse(message.utf8Data);
+	socket.on('invitation', function (data) {
+		if(instances[data.user]) {
+			instances[data.user].emit('invitation', {id: data.id});
+		} else {
+			socket.emit('error', {id: data.id});
+		}
 
-			if(data.type == 'invitation') {
-				if(instances[data.user]) {
-					var msg = JSON.stringify({type: 'invitation', id: data.id});
-					instances[data.user].send(msg);
-				} else {
-					var msg = JSON.stringify({type: 'error', id: data.id});
-					socket.send(msg);
-				}
+	});
 
-			} else if(data.type == 'join') {
-				instances[data.id] = socket;
+	socket.on('join', function (data) {
+		instances[data.id] = socket;
+	});	
 
-			} else {
-				instances[data.id].send(message.utf8Data);
-			}
-		});
-		
-		socket.on('close', function(socket) {
-			// close user socket
-		});
+	socket.on('offer', function (data) {
+		instances[data.id].emit('offer', data);
+	});
+
+	socket.on('answer', function (data) {
+		instances[data.id].emit('answer', data);
+	});
+
+	socket.on('candidate', function (data) {
+		instances[data.id].emit('candidate', data);
+	});
+
 });
 
 server.listen(app.get('port'), function(){});

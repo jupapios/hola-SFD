@@ -25,7 +25,7 @@ function InvitationController($scope) {
 			if($scope.invitationForm.$valid) {
 				//socket
 				otherId = $scope.userType;
-				sendMessage({type: 'invitation', user: otherId, id: myId});
+				sendMessage('invitation', {user: otherId, id: myId});
 			}
 		} else {
 			// show waiting
@@ -54,9 +54,8 @@ var otherId;
 var myId;
 
 
-function sendMessage(message) {
-	var msgString = JSON.stringify(message);
-	socket.send(msgString);
+function sendMessage(event, message) {
+	socket.emit(event, message);
 }
 
 function waitForRemoteVideo() {
@@ -88,7 +87,7 @@ function initPeer() {
 
 function onIceCandidate(candidate, moreToFollow) {
 	if (candidate) {
-		sendMessage({type: 'candidate', label: candidate.label, candidate: candidate.toSdp(),  id: otherId});
+		sendMessage('candidate', {label: candidate.label, candidate: candidate.toSdp(),  id: otherId});
 	}	
 	if (!moreToFollow) {
 		console.log("End of candidates.");
@@ -122,7 +121,7 @@ function doCall() {
 	var offer = pc.createOffer({audio:true, video:true});
 	pc.setLocalDescription(pc.SDP_OFFER, offer);
 	console.log("Send offer to peer",'type: offer', 'sdp:', offer.toSdp(), 'peer:', otherId, 'caller' ,myId);
-	sendMessage({type: 'offer', sdp: offer.toSdp(), id: otherId, caller: myId});
+	sendMessage('offer', {sdp: offer.toSdp(), id: otherId, caller: myId});
 	pc.startIce();
 }
 
@@ -131,7 +130,7 @@ function doAnswer() {
 	var offer = pc.remoteDescription;
 	var answer = pc.createAnswer(offer.toSdp(), {audio:true,video:true});
 	pc.setLocalDescription(pc.SDP_ANSWER, answer);
-	sendMessage({type: 'answer', sdp: answer.toSdp(), id: otherId});
+	sendMessage('answer', {sdp: answer.toSdp(), id: otherId});
 	pc.startIce();
 }
 
@@ -158,10 +157,10 @@ function onUserMediaError(message) {
 }
 
 function init() {
-	socket = new WebSocket('ws://hola.jit.su/');
+	socket = io.connect('http://hola.jit.su');
 	//socket = new WebSocket('ws://192.168.1.130:3000/');
 
-	socket.onopen = function () {
+	socket.on('connect', function () {
 		socketReady = true;
 
 		localVideo = document.getElementById('video-local');
@@ -171,7 +170,7 @@ function init() {
 		myId = document.getElementById('peerId').dataset.id;
 		
 		if(myId) {
-			sendMessage({type: 'join', id: myId});
+			sendMessage('join', {id: myId});
 		}
 
 		// link cuando se es invitado
@@ -179,47 +178,50 @@ function init() {
 
 		invitationElement.querySelector('a').addEventListener('click', function() {
 			invitationElement.className = 'hidden';
-			sendMessage({type: 'accept', id: otherId});
+			sendMessage('accept', {id: otherId});
 			initiator = 1;
 			initPeer();
 		});
 
-	}
+	});
 
-	socket.onmessage = function (message) {
-		var data = JSON.parse(message.data);
-		var type = data.type;
 
-		if(type == 'invitation') {
+	socket.on('error', function () {
 
-			var invitationElement = document.getElementById('invitation');
-			invitationElement.querySelector('#user').innerText = data.id;
-			invitationElement.className = '';
+		var inputElement = document.querySelector('input[type="submit"]');
 
-			otherId = data.id;
+		inputElement.className += ' error';
+		setTimeout(function () {
+			inputElement.className = 'button-orange';
+		}, 600);
 
-		} else if(type == 'accept') {
-			initPeer();
-		} else if(type == 'error') {
+	});
 
-			var inputElement = document.querySelector('input[type="text"]');
-			inputElement.className = '';
-			inputElement.className = 'error';
 
-		} else if(type == 'offer') {
-			otherId = data.caller;
-			console.log('Socker Rec: offer '+otherId);
-			initPeer();
+	socket.on('invitation', function (data) {
+		var invitationElement = document.getElementById('invitation');
+		invitationElement.querySelector('#user').innerText = data.id;
+		invitationElement.className = '';
 
-			pc.setRemoteDescription(pc.SDP_OFFER, new SessionDescription(data.sdp));
-			doAnswer();
-		} else if(type == 'answer') {
-			console.log('Socket Rec: answer');
-			pc.setRemoteDescription(pc.SDP_ANSWER, new SessionDescription(data.sdp));
-		} else if(type == 'candidate') {
-			var candidate = new IceCandidate(data.label, data.candidate);
-			pc.processIceMessage(candidate);
-		}
-	}
+		otherId = data.id;		
+	});
+
+	socket.on('offer', function (data) {
+		otherId = data.caller;
+		initPeer();
+
+		pc.setRemoteDescription(pc.SDP_OFFER, new SessionDescription(data.sdp));
+		doAnswer();
+	});
+
+	socket.on('answer', function (data) {
+		pc.setRemoteDescription(pc.SDP_ANSWER, new SessionDescription(data.sdp));
+	});
+
+	socket.on('candidate', function (data) {
+		var candidate = new IceCandidate(data.label, data.candidate);
+		pc.processIceMessage(candidate);
+
+	});
 
 }
