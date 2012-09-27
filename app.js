@@ -80,7 +80,7 @@ var clients = {};
 
 // create the server
 ws = new WebSocketServer({
-		httpServer: server
+	httpServer: server
 });
 
 function sendCallback(err) {
@@ -97,14 +97,19 @@ ws.on('request', function(request) {
 
 		socket.on('message', function(message) {
 			var data = JSON.parse(message.utf8Data);
+
 			if(data.type == 'invitation') {
 				if(instances[data.user]) {
 					var msg = JSON.stringify({type: 'invitation', id: data.id});
-					console.log(msg);
 					instances[data.user].send(msg);
+				} else {
+					var msg = JSON.stringify({type: 'error', id: data.id});
+					socket.send(msg);
 				}
+
 			} else if(data.type == 'join') {
 				instances[data.id] = socket;
+
 			} else {
 				instances[data.id].send(message.utf8Data);
 			}

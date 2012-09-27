@@ -70,8 +70,8 @@ function waitForRemoteVideo() {
 
 // PC FUNCTINS
 function initPeer() {
-	//pc = new webkitPeerConnection00("STUN stun.l.google.com:19302", onIceCandidate);
-	pc = new webkitPeerConnection00("NONE", onIceCandidate);
+	pc = new webkitPeerConnection00("STUN stun.l.google.com:19302", onIceCandidate);
+	//pc = new webkitPeerConnection00("NONE", onIceCandidate);
 
 	pc.onconnecting = onSessionConnecting;
 	pc.onopen = onSessionOpened;
@@ -158,6 +158,7 @@ function onUserMediaError(message) {
 }
 
 function init() {
+	//socket = new WebSocket('ws://hola.jit.su/');
 	socket = new WebSocket('ws://hola.jit.su/');
 
 	socket.onopen = function () {
@@ -189,10 +190,8 @@ function init() {
 		var data = JSON.parse(message.data);
 		var type = data.type;
 
-		if(type == 'id') {
-			myId = data.id;
-			console.log(data.id);
-		} else if(type == 'invitation') {
+		if(type == 'invitation') {
+
 			var invitationElement = document.getElementById('invitation');
 			invitationElement.querySelector('#user').innerText = data.id;
 			invitationElement.className = '';
@@ -201,6 +200,12 @@ function init() {
 
 		} else if(type == 'accept') {
 			initPeer();
+		} else if(type == 'error') {
+
+			var inputElement = document.querySelector('input[type="text"]');
+			inputElement.className = '';
+			inputElement.className = 'error';
+
 		} else if(type == 'offer') {
 			otherId = data.caller;
 			console.log('Socker Rec: offer '+otherId);
