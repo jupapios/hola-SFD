@@ -60,7 +60,7 @@ function sendMessage(event, message) {
 
 function waitForRemoteVideo() {
 	if (remoteVideo.currentTime > 0) {
-		document.getElementById('video-container').className += ' active';
+		
 	} else {
 		setTimeout(waitForRemoteVideo, 100);
 	}
@@ -106,6 +106,7 @@ function onRemoteStreamAdded(message) {
 	console.log("Stream added.");
 	var url = webkitURL.createObjectURL(event.stream);
 	remoteVideo.src = url;
+	document.getElementById('video-container').className += ' active';
 	waitForRemoteVideo();
 }
 

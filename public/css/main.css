@@ -512,6 +512,7 @@ form p.error span.left {
   padding: 5px;
   margin-left: -200px;
   width: 400px;
+  z-index: 999999;
 }
 #sec-home #invitation a {
   display: block;
