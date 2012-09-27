@@ -158,7 +158,7 @@ function onUserMediaError(message) {
 }
 
 function init() {
-	socket = new WebSocket('ws://holasfd.herokuapp.com/');
+	socket = new WebSocket('ws://hola.jit.su/');
 
 	socket.onopen = function () {
 		socketReady = true;
