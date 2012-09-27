@@ -74,8 +74,6 @@ var server = http.createServer(app);
 
 
 var WebSocketServer = require('websocket').server;
-//var http = require('http');
-var clients = {};
 
 
 // create the server
@@ -83,13 +81,8 @@ ws = new WebSocketServer({
 	httpServer: server
 });
 
-function sendCallback(err) {
-	if (err) console.error("send() error: " + err);
-}
 
-var connId = 0;
 var instances = {};
-var instances_tmp = {};
 
 ws.on('request', function(request) {
 	
@@ -117,7 +110,6 @@ ws.on('request', function(request) {
 		
 		socket.on('close', function(socket) {
 			// close user socket
-			console.log((new Date()) + " Peer disconnected.");        
 		});
 });
 
