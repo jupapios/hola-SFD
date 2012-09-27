@@ -18,7 +18,3 @@ exports.login = function(req, res){
 exports.register = function(req, res){
   res.render('register', { title: 'getUserMedia' });
 };
-
-exports.chat = function(req, res){
-  res.render('chat', { title: 'getUserMedia' });
-};

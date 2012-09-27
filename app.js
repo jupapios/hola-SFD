@@ -32,8 +32,7 @@ app.locals({
 	url: {
 		home: '/',
 		login: '/login',
-		register: '/register',
-		chat: '/chat'
+		register: '/register'
 	}
 });
 
@@ -72,7 +71,6 @@ app.post(app.locals.url.register, user.doRegister);
 app.get(app.locals.url.login, routes.login);
 app.get(app.locals.url.register, routes.register);
 
-app.get(app.locals.url.chat, routes.chat);
 
 //app.get('/login', user.doLogin);
 
@@ -103,16 +101,6 @@ var instances_tmp = {};
 ws.on('request', function(request) {
 	
 		var socket = request.accept(null, request.origin);
-
-		/*clients[connId] = socket;
-		var messageId = {type: 'id', id: connId};
-
-		console.log(socket);
-
-		connId++;
-
-		socket.send(JSON.stringify(messageId));*/
-		
 
 		socket.on('message', function(message) {
 			var data = JSON.parse(message.utf8Data);
