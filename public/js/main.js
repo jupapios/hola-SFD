@@ -157,8 +157,8 @@ function onUserMediaError(message) {
 }
 
 function init() {
-	socket = io.connect('http://hola.jit.su');
-	//socket = new WebSocket('ws://192.168.1.130:3000/');
+	//socket = io.connect('http://hola.jit.su');
+	socket = io.connect('http://192.168.1.130:3000');
 
 	socket.on('connect', function () {
 		socketReady = true;
@@ -221,7 +221,6 @@ function init() {
 	socket.on('candidate', function (data) {
 		var candidate = new IceCandidate(data.label, data.candidate);
 		pc.processIceMessage(candidate);
-
 	});
 
 }
