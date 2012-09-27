@@ -2,8 +2,6 @@
 /**
  * Module dependencies.
  */
-
-
 var express = require('express')
 	, routes = require('./routes')
 	, user = require('./routes/user')
@@ -72,11 +70,6 @@ app.get(app.locals.url.login, routes.login);
 app.get(app.locals.url.register, routes.register);
 
 
-//app.get('/login', user.doLogin);
-
-// app.get('/users', user.list);
-
-
 var server = http.createServer(app);
 
 
@@ -123,6 +116,4 @@ ws.on('request', function(request) {
 		});
 });
 
-server.listen(app.get('port'), function(){
-	console.log("Express server listening on port " + app.get('port'));
-});
+server.listen(app.get('port'), function(){});
